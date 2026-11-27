@@ -1,0 +1,1395 @@
+<html lang="ar" dir="rtl" class="scroll-smooth"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mate Page | ميت بيج - فيشر يعلمك الشطرنج (نسخة إلكترونية)</title>
+    
+    <!-- Google Fonts: Cairo, Amiri for Arabic & Cinzel, Montserrat for English Branding -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&amp;family=Cairo:wght@300;400;500;600;700;800;900&amp;family=Cinzel:wght@600;700;800&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#0D0F12',
+                        charcoal: '#15181E',
+                        slateDark: '#1E232B',
+                        parchment: '#F5F0E6',
+                        ivory: '#FAF7F2',
+                        fischerOrange: '#D94E28',
+                        fischerOrangeDark: '#B33B1B',
+                        brushedGold: '#D4AF37',
+                        goldLight: '#F0D475',
+                    },
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                        serifArabic: ['Amiri', 'serif'],
+                        brand: ['Cinzel', 'serif'],
+                        latin: ['Montserrat', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'gold-glow': '0 0 30px rgba(212, 175, 55, 0.15)',
+                        'orange-glow': '0 10px 40px -10px rgba(217, 78, 40, 0.45)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Styling & Scrollbar */
+        body {
+            background-color: #0D0F12;
+            color: #F5F0E6;
+            font-family: 'Cairo', sans-serif;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0D0F12;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2A303C;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D94E28;
+        }
+
+        /* Subtle Chessboard Background Pattern */
+        .chess-bg-pattern {
+            background-image: 
+                linear-gradient(45deg, rgba(255, 255, 255, 0.015) 25%, transparent 25%), 
+                linear-gradient(-45deg, rgba(255, 255, 255, 0.015) 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.015) 75%), 
+                linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.015) 75%);
+            background-size: 64px 64px;
+            background-position: 0 0, 0 32px, 32px -32px, -32px 0;
+        }
+
+        /* 3D Interactive Book Mockup Styling */
+        .book-scene {
+            perspective: 1400px;
+        }
+
+        .book-3d {
+            position: relative;
+            width: 280px;
+            height: 410px;
+            transform-style: preserve-3d;
+            transform: rotateY(22deg) rotateX(4deg);
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
+        }
+
+        @media (min-width: 640px) {
+            .book-3d {
+                width: 320px;
+                height: 465px;
+            }
+        }
+
+        .book-scene:hover .book-3d {
+            transform: rotateY(8deg) rotateX(1deg) translateY(-6px);
+        }
+
+        /* Front Cover */
+        .book-front {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 4px 12px 12px 4px;
+            background: linear-gradient(145deg, #E2552E 0%, #C8401B 60%, #9E2E10 100%);
+            box-shadow: 
+                -15px 20px 45px rgba(0, 0, 0, 0.75),
+                inset 0 0 40px rgba(0, 0, 0, 0.25),
+                inset 2px 0 6px rgba(255, 255, 255, 0.25);
+            overflow: hidden;
+            backface-visibility: hidden;
+            z-index: 2;
+        }
+
+        /* Vintage Paper Grain & Crease Texture Overlay */
+        .vintage-texture {
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0,0,0,0.2) 0%, transparent 50%),
+                repeating-linear-gradient(115deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 18px),
+                repeating-linear-gradient(25deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 27px);
+            mix-blend-mode: overlay;
+        }
+
+        /* Book Spine (Right side in RTL) */
+        .book-spine {
+            position: absolute;
+            top: 0;
+            right: -34px;
+            width: 36px;
+            height: 100%;
+            background: linear-gradient(90deg, #9B2E11 0%, #D94E28 50%, #86240A 100%);
+            transform: rotateY(90deg);
+            transform-origin: left center;
+            border-radius: 2px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Book Pages Edge (Left side in RTL) */
+        .book-pages {
+            position: absolute;
+            top: 4px;
+            left: -28px;
+            width: 30px;
+            height: calc(100% - 8px);
+            background: repeating-linear-gradient(
+                90deg,
+                #F5F0E6 0px,
+                #F5F0E6 2px,
+                #D8CFC0 2px,
+                #D8CFC0 4px
+            );
+            transform: rotateY(-90deg);
+            transform-origin: right center;
+            box-shadow: inset 4px 0 10px rgba(0,0,0,0.25);
+        }
+
+        /* Book Back Shadow */
+        .book-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #7A2109;
+            transform: translateZ(-32px);
+            border-radius: 4px 12px 12px 4px;
+            box-shadow: -25px 30px 60px rgba(0, 0, 0, 0.85);
+        }
+
+        /* Floating Animation */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float {
+            animation: floatSlow 4.5s ease-in-out infinite;
+        }
+        .animate-float-delayed {
+            animation: floatSlow 5.2s ease-in-out 1.5s infinite;
+        }
+
+        /* Glassmorphism Card */
+        .glass-panel {
+            background: rgba(21, 24, 30, 0.72);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(245, 240, 230, 0.08);
+        }
+
+        /* Mini Chess Board Squares */
+        .chess-sq-light { background-color: #E8DEC8; }
+        .chess-sq-dark { background-color: #7D5A44; }
+        .chess-sq-highlight { box-shadow: inset 0 0 0 3px #D4AF37; background-color: rgba(212, 175, 55, 0.45) !important; }
+        .chess-sq-target { position: relative; }
+        .chess-sq-target::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border-radius: 9999px;
+            background: rgba(217, 78, 40, 0.75);
+            box-shadow: 0 0 10px rgba(217, 78, 40, 0.9);
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Cairo, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.inset-x-0{left:0px;right:0px}.-bottom-16{bottom:-4rem}.-left-16{left:-4rem}.-top-2{top:-0.5rem}.bottom-0{bottom:0px}.bottom-10{bottom:2.5rem}.bottom-4{bottom:1rem}.left-0{left:0px}.left-1\/4{left:25%}.right-0{right:0px}.right-1\/4{right:25%}.right-2{right:0.5rem}.right-3{right:0.75rem}.top-0{top:0px}.top-2\.5{top:0.625rem}.top-20{top:5rem}.z-10{z-index:10}.z-20{z-index:20}.z-30{z-index:30}.z-40{z-index:40}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-4{margin-top:1rem;margin-bottom:1rem}.my-auto{margin-top:auto;margin-bottom:auto}.mb-1{margin-bottom:0.25rem}.mb-1\.5{margin-bottom:0.375rem}.mb-12{margin-bottom:3rem}.mb-14{margin-bottom:3.5rem}.mb-2{margin-bottom:0.5rem}.mb-5{margin-bottom:1.25rem}.mt-0\.5{margin-top:0.125rem}.mt-1{margin-top:0.25rem}.mt-1\.5{margin-top:0.375rem}.mt-2{margin-top:0.5rem}.mt-3{margin-top:0.75rem}.mt-auto{margin-top:auto}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-11{height:2.75rem}.h-12{height:3rem}.h-14{height:3.5rem}.h-16{height:4rem}.h-2{height:0.5rem}.h-2\.5{height:0.625rem}.h-20{height:5rem}.h-3{height:0.75rem}.h-3\.5{height:0.875rem}.h-4{height:1rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.h-60{height:15rem}.h-64{height:16rem}.h-8{height:2rem}.h-80{height:20rem}.h-9{height:2.25rem}.h-96{height:24rem}.h-full{height:100%}.w-11{width:2.75rem}.w-12{width:3rem}.w-14{width:3.5rem}.w-16{width:4rem}.w-2{width:0.5rem}.w-2\.5{width:0.625rem}.w-3\.5{width:0.875rem}.w-4{width:1rem}.w-44{width:11rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-64{width:16rem}.w-8{width:2rem}.w-80{width:20rem}.w-9{width:2.25rem}.w-96{width:24rem}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-3xl{max-width:48rem}.max-w-4xl{max-width:56rem}.max-w-6xl{max-width:72rem}.max-w-7xl{max-width:80rem}.max-w-lg{max-width:32rem}.max-w-md{max-width:28rem}.max-w-xl{max-width:36rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.rotate-180{--tw-rotate:180deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes ping{75%, 100%{transform:scale(2);opacity:0}}.animate-ping{animation:ping 1s cubic-bezier(0, 0, 0.2, 1) infinite}@keyframes spin{to{transform:rotate(360deg)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.grid-cols-5{grid-template-columns:repeat(5, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.items-baseline{align-items:baseline}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-1\.5{gap:0.375rem}.gap-12{gap:3rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-3{gap:0.75rem}.gap-3\.5{gap:0.875rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-3\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.875rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.875rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.scroll-smooth{scroll-behavior:smooth}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-4{border-width:4px}.border-y{border-top-width:1px;border-bottom-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-brushedGold\/20{border-color:rgb(212 175 55 / 0.2)}.border-brushedGold\/30{border-color:rgb(212 175 55 / 0.3)}.border-emerald-400{--tw-border-opacity:1;border-color:rgb(52 211 153 / var(--tw-border-opacity, 1))}.border-fischerOrange{--tw-border-opacity:1;border-color:rgb(217 78 40 / var(--tw-border-opacity, 1))}.border-fischerOrange\/30{border-color:rgb(217 78 40 / 0.3)}.border-fischerOrange\/40{border-color:rgb(217 78 40 / 0.4)}.border-goldLight\/30{border-color:rgb(240 212 117 / 0.3)}.border-goldLight\/40{border-color:rgb(240 212 117 / 0.4)}.border-parchment\/10{border-color:rgb(245 240 230 / 0.1)}.border-parchment\/15{border-color:rgb(245 240 230 / 0.15)}.border-parchment\/5{border-color:rgb(245 240 230 / 0.05)}.border-red-500\/40{border-color:rgb(239 68 68 / 0.4)}.border-slateDark{--tw-border-opacity:1;border-color:rgb(30 35 43 / var(--tw-border-opacity, 1))}.border-white\/20{border-color:rgb(255 255 255 / 0.2)}.border-t-fischerOrange{--tw-border-opacity:1;border-top-color:rgb(217 78 40 / var(--tw-border-opacity, 1))}.bg-black\/80{background-color:rgb(0 0 0 / 0.8)}.bg-black\/85{background-color:rgb(0 0 0 / 0.85)}.bg-brushedGold{--tw-bg-opacity:1;background-color:rgb(212 175 55 / var(--tw-bg-opacity, 1))}.bg-brushedGold\/10{background-color:rgb(212 175 55 / 0.1)}.bg-brushedGold\/15{background-color:rgb(212 175 55 / 0.15)}.bg-brushedGold\/20{background-color:rgb(212 175 55 / 0.2)}.bg-charcoal{--tw-bg-opacity:1;background-color:rgb(21 24 30 / var(--tw-bg-opacity, 1))}.bg-charcoal\/70{background-color:rgb(21 24 30 / 0.7)}.bg-charcoal\/80{background-color:rgb(21 24 30 / 0.8)}.bg-emerald-500\/10{background-color:rgb(16 185 129 / 0.1)}.bg-emerald-500\/15{background-color:rgb(16 185 129 / 0.15)}.bg-emerald-500\/20{background-color:rgb(16 185 129 / 0.2)}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-fischerOrange{--tw-bg-opacity:1;background-color:rgb(217 78 40 / var(--tw-bg-opacity, 1))}.bg-fischerOrange\/10{background-color:rgb(217 78 40 / 0.1)}.bg-fischerOrange\/15{background-color:rgb(217 78 40 / 0.15)}.bg-fischerOrange\/20{background-color:rgb(217 78 40 / 0.2)}.bg-obsidian{--tw-bg-opacity:1;background-color:rgb(13 15 18 / var(--tw-bg-opacity, 1))}.bg-obsidian\/60{background-color:rgb(13 15 18 / 0.6)}.bg-obsidian\/80{background-color:rgb(13 15 18 / 0.8)}.bg-obsidian\/85{background-color:rgb(13 15 18 / 0.85)}.bg-obsidian\/90{background-color:rgb(13 15 18 / 0.9)}.bg-parchment{--tw-bg-opacity:1;background-color:rgb(245 240 230 / var(--tw-bg-opacity, 1))}.bg-red-500\/15{background-color:rgb(239 68 68 / 0.15)}.bg-slateDark{--tw-bg-opacity:1;background-color:rgb(30 35 43 / var(--tw-bg-opacity, 1))}.bg-slateDark\/90{background-color:rgb(30 35 43 / 0.9)}.bg-white\/5{background-color:rgb(255 255 255 / 0.05)}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.bg-gradient-to-l{background-image:linear-gradient(to left, var(--tw-gradient-stops))}.from-black\/35{--tw-gradient-from:rgb(0 0 0 / 0.35) var(--tw-gradient-from-position);--tw-gradient-to:rgb(0 0 0 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-fischerOrange{--tw-gradient-from:#D94E28 var(--tw-gradient-from-position);--tw-gradient-to:rgb(217 78 40 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-orange-400{--tw-gradient-to:rgb(251 146 60 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #fb923c var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-white\/10{--tw-gradient-to:rgb(255 255 255 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), rgb(255 255 255 / 0.1) var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-fischerOrangeDark{--tw-gradient-to:#B33B1B var(--tw-gradient-to-position)}.to-goldLight{--tw-gradient-to:#F0D475 var(--tw-gradient-to-position)}.to-transparent{--tw-gradient-to:transparent var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.object-cover{object-fit:cover}.object-bottom{object-position:bottom}.p-1{padding:0.25rem}.p-1\.5{padding:0.375rem}.p-12{padding:3rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-7{padding-left:1.75rem;padding-right:1.75rem}.px-8{padding-left:2rem;padding-right:2rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-20{padding-top:5rem;padding-bottom:5rem}.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pb-20{padding-bottom:5rem}.pb-4{padding-bottom:1rem}.pb-6{padding-bottom:1.5rem}.pb-8{padding-bottom:2rem}.pt-10{padding-top:2.5rem}.pt-12{padding-top:3rem}.pt-2{padding-top:0.5rem}.pt-4{padding-top:1rem}.pt-6{padding-top:1.5rem}.pt-8{padding-top:2rem}.text-center{text-align:center}.text-right{text-align:right}.font-brand{font-family:Cinzel, serif}.font-latin{font-family:Montserrat, sans-serif}.font-sans{font-family:Cairo, sans-serif}.font-serifArabic{font-family:Amiri, serif}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-\[9px\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-wide{letter-spacing:0.025em}.tracking-wider{letter-spacing:0.05em}.tracking-widest{letter-spacing:0.1em}.text-brushedGold{--tw-text-opacity:1;color:rgb(212 175 55 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-fischerOrange{--tw-text-opacity:1;color:rgb(217 78 40 / var(--tw-text-opacity, 1))}.text-goldLight{--tw-text-opacity:1;color:rgb(240 212 117 / var(--tw-text-opacity, 1))}.text-ivory{--tw-text-opacity:1;color:rgb(250 247 242 / var(--tw-text-opacity, 1))}.text-ivory\/80{color:rgb(250 247 242 / 0.8)}.text-ivory\/90{color:rgb(250 247 242 / 0.9)}.text-obsidian{--tw-text-opacity:1;color:rgb(13 15 18 / var(--tw-text-opacity, 1))}.text-parchment{--tw-text-opacity:1;color:rgb(245 240 230 / var(--tw-text-opacity, 1))}.text-parchment\/30{color:rgb(245 240 230 / 0.3)}.text-parchment\/40{color:rgb(245 240 230 / 0.4)}.text-parchment\/45{color:rgb(245 240 230 / 0.45)}.text-parchment\/50{color:rgb(245 240 230 / 0.5)}.text-parchment\/55{color:rgb(245 240 230 / 0.55)}.text-parchment\/60{color:rgb(245 240 230 / 0.6)}.text-parchment\/65{color:rgb(245 240 230 / 0.65)}.text-parchment\/70{color:rgb(245 240 230 / 0.7)}.text-parchment\/75{color:rgb(245 240 230 / 0.75)}.text-parchment\/80{color:rgb(245 240 230 / 0.8)}.text-parchment\/85{color:rgb(245 240 230 / 0.85)}.text-red-300{--tw-text-opacity:1;color:rgb(252 165 165 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.line-through{-webkit-text-decoration-line:line-through;text-decoration-line:line-through}.placeholder-parchment\/40::placeholder{color:rgb(245 240 230 / 0.4)}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-gold-glow{--tw-shadow:0 0 30px rgba(212, 175, 55, 0.15);--tw-shadow-colored:0 0 30px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-orange-glow{--tw-shadow:0 10px 40px -10px rgba(217, 78, 40, 0.45);--tw-shadow-colored:0 10px 40px -10px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.blur-3xl{--tw-blur:blur(64px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.blur-\[120px\]{--tw-blur:blur(120px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.blur-\[130px\]{--tw-blur:blur(130px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.drop-shadow{--tw-drop-shadow:drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.drop-shadow-\[0_2px_4px_rgba\(0\2c 0\2c 0\2c 0\.45\)\]{--tw-drop-shadow:drop-shadow(0 2px 4px rgba(0,0,0,0.45));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.selection\:bg-fischerOrange *::selection{--tw-bg-opacity:1;background-color:rgb(217 78 40 / var(--tw-bg-opacity, 1))}.selection\:text-white *::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.selection\:bg-fischerOrange::selection{--tw-bg-opacity:1;background-color:rgb(217 78 40 / var(--tw-bg-opacity, 1))}.selection\:text-white::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:-translate-y-0\.5:hover{--tw-translate-y:-0.125rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:border-brushedGold\/40:hover{border-color:rgb(212 175 55 / 0.4)}.hover\:border-brushedGold\/50:hover{border-color:rgb(212 175 55 / 0.5)}.hover\:border-fischerOrange\/50:hover{border-color:rgb(217 78 40 / 0.5)}.hover\:border-parchment\/40:hover{border-color:rgb(245 240 230 / 0.4)}.hover\:bg-emerald-500:hover{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.hover\:bg-fischerOrange:hover{--tw-bg-opacity:1;background-color:rgb(217 78 40 / var(--tw-bg-opacity, 1))}.hover\:bg-fischerOrangeDark:hover{--tw-bg-opacity:1;background-color:rgb(179 59 27 / var(--tw-bg-opacity, 1))}.hover\:bg-goldLight:hover{--tw-bg-opacity:1;background-color:rgb(240 212 117 / var(--tw-bg-opacity, 1))}.hover\:bg-slateDark\/80:hover{background-color:rgb(30 35 43 / 0.8)}.hover\:bg-white\/10:hover{background-color:rgb(255 255 255 / 0.1)}.hover\:bg-white\/\[0\.02\]:hover{background-color:rgb(255 255 255 / 0.02)}.hover\:text-fischerOrange:hover{--tw-text-opacity:1;color:rgb(217 78 40 / var(--tw-text-opacity, 1))}.hover\:text-goldLight:hover{--tw-text-opacity:1;color:rgb(240 212 117 / var(--tw-text-opacity, 1))}.hover\:text-ivory:hover{--tw-text-opacity:1;color:rgb(250 247 242 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}.hover\:brightness-110:hover{--tw-brightness:brightness(1.1);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.focus\:border-brushedGold:focus{--tw-border-opacity:1;border-color:rgb(212 175 55 / var(--tw-border-opacity, 1))}.focus\:border-fischerOrange:focus{--tw-border-opacity:1;border-color:rgb(217 78 40 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.active\:scale-95:active{--tw-scale-x:.95;--tw-scale-y:.95;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-110{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@media (min-width: 640px){.sm\:left-4{left:1rem}.sm\:right-6{right:1.5rem}.sm\:inline{display:inline}.sm\:h-5{height:1.25rem}.sm\:h-72{height:18rem}.sm\:w-5{width:1.25rem}.sm\:w-72{width:18rem}.sm\:w-auto{width:auto}.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:gap-4{gap:1rem}.sm\:p-10{padding:2.5rem}.sm\:p-12{padding:3rem}.sm\:p-6{padding:1.5rem}.sm\:p-8{padding:2rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:pt-10{padding-top:2.5rem}.sm\:text-2xl{font-size:1.5rem;line-height:2rem}.sm\:text-3xl{font-size:1.875rem;line-height:2.25rem}.sm\:text-4xl{font-size:2.25rem;line-height:2.5rem}.sm\:text-5xl{font-size:3rem;line-height:1}.sm\:text-base{font-size:1rem;line-height:1.5rem}.sm\:text-lg{font-size:1.125rem;line-height:1.75rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}}@media (min-width: 768px){.md\:col-span-6{grid-column:span 6 / span 6}.md\:flex{display:flex}.md\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}}@media (min-width: 1024px){.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:mx-0{margin-left:0px;margin-right:0px}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.lg\:justify-start{justify-content:flex-start}.lg\:gap-8{gap:2rem}.lg\:px-8{padding-left:2rem;padding-right:2rem}.lg\:pb-28{padding-bottom:7rem}.lg\:pt-16{padding-top:4rem}.lg\:text-right{text-align:right}.lg\:text-6xl{font-size:3.75rem;line-height:1}}</style></head>
+<body class="chess-bg-pattern selection:bg-fischerOrange selection:text-white">
+
+    <!-- ==================== 1. STICKY GLASSMORPHIC NAVBAR ==================== -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-parchment/10 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Brand Logo: Geometric Chess Knight/King + MATE PAGE -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-fischerOrange to-fischerOrangeDark flex items-center justify-center shadow-orange-glow border border-goldLight/30 group-hover:scale-105 transition-transform">
+                        <!-- Custom Geometric Chess Crown/Knight SVG -->
+                        <svg class="w-6 h-6 text-ivory" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 22H5V20H19V22ZM17 18H7L8 14H16L17 18ZM15 12H9L7.5 6L12 8.5L16.5 6L15 12ZM12 2L13.5 4.5L12 6L10.5 4.5L12 2Z"></path>
+                        </svg>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-brand text-xl sm:text-2xl font-bold tracking-wider text-ivory leading-none">
+                            MATE <span class="text-fischerOrange">PAGE</span>
+                        </span>
+                        <span class="text-[11px] text-parchment/60 font-medium tracking-wide mt-0.5">مكتبة الشطرنج الرقمية</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-parchment/80">
+                    <a href="#book-spotlight" class="hover:text-fischerOrange transition-colors">الكتاب الحصري</a>
+                    <a href="#why-this-book" class="hover:text-fischerOrange transition-colors">منهج فيشر</a>
+                    <a href="#chapters" class="hover:text-fischerOrange transition-colors">فهرس المحتويات</a>
+                    <a href="#upcoming" class="hover:text-fischerOrange transition-colors">الإصدارات القادمة</a>
+                    <a href="#faq" class="hover:text-fischerOrange transition-colors">الأسئلة الشائعة</a>
+                </nav>
+
+                <!-- Right Actions: Currency Selector & Checkout Trigger -->
+                <div class="flex items-center gap-2.5 sm:gap-4">
+                    <!-- Currency Switcher -->
+                    <div class="relative">
+                        <select id="currencySelector" onchange="updateCurrency(this.value)" aria-label="اختر العملة" class="bg-slateDark/90 text-parchment text-xs sm:text-sm font-bold py-2 px-3 rounded-xl border border-parchment/15 focus:outline-none focus:border-brushedGold cursor-pointer">
+                            <option value="SAR" selected="">SAR ر.س</option>
+                            <option value="USD">USD $</option>
+                            <option value="AED">AED د.إ</option>
+                        </select>
+                    </div>
+
+                    <!-- Instant Buy / Cart Button -->
+                    <button onclick="openCheckoutModal()" class="relative flex items-center gap-2 bg-fischerOrange hover:bg-fischerOrangeDark text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl shadow-orange-glow transition-all active:scale-95">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                        <span class="hidden sm:inline">اشترِ الآن</span>
+                        <span id="cartBadge" class="bg-obsidian text-goldLight text-[11px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center border border-goldLight/40">1</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== 2. HERO SECTION (FLAGSHIP BOOK SPOTLIGHT) ==================== -->
+    <section id="book-spotlight" class="relative pt-10 pb-20 lg:pt-16 lg:pb-28 overflow-hidden">
+        <!-- Ambient Radial Glows -->
+        <div class="absolute top-20 right-1/4 w-96 h-96 bg-fischerOrange/15 rounded-full blur-[130px] pointer-events-none"></div>
+        <div class="absolute bottom-10 left-1/4 w-80 h-80 bg-brushedGold/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                
+                <!-- Right Column: Persuasive Copy & Pricing (7 Cols) -->
+                <div class="lg:col-span-7 text-center lg:text-right space-y-6">
+                    <!-- Exclusive Launch Badge -->
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slateDark/90 border border-brushedGold/30 text-goldLight text-xs sm:text-sm font-semibold shadow-gold-glow">
+                        <span class="w-2 h-2 rounded-full bg-fischerOrange animate-ping"></span>
+                        <span>الإصدار الحصري الأول • نسخة رقمية فورية PDF &amp; EPUB</span>
+                    </div>
+
+                    <!-- Main Title -->
+                    <div class="space-y-3">
+                        <p class="text-fischerOrange font-bold tracking-wide text-sm sm:text-base">
+                            تحفة بطل العالم الحادي عشر في الشطرنج — بوبي فيشر
+                        </p>
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-ivory leading-tight">
+                            فيشر يعلمك <span class="text-transparent bg-clip-text bg-gradient-to-l from-fischerOrange via-orange-400 to-goldLight">الشطرنج</span>
+                        </h1>
+                        <p class="text-parchment/70 text-sm sm:text-base font-medium">
+                            النسخة العربية الكاملة والمنقحة • ترجمة: <span class="text-parchment font-bold">عبد الرحمن بعلبكي</span>
+                        </p>
+                    </div>
+
+                    <!-- Persuasive Description -->
+                    <p class="text-parchment/85 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        الكتاب الأكثر مبيعاً في تاريخ الشطرنج العالمي! اكتشف المنهج التفاعلي المبرمج الذي ابتكره الأسطورة <strong class="text-ivory">بوبي فيشر</strong> ليحوّلك من لاعب يعرف تحريك القطع إلى مفكر تكتيكي يقتنص <span class="text-fischerOrange font-bold">«كش مات»</span> من أي وضعية، دون الحاجة لحفظ افتتاحيات معقدة.
+                    </p>
+
+                    <!-- Price & Value Box -->
+                    <div class="glass-panel rounded-2xl p-5 sm:p-6 max-w-xl mx-auto lg:mx-0 border border-brushedGold/20">
+                        <div class="flex flex-wrap items-center justify-between gap-4">
+                            <div>
+                                <span class="text-xs text-parchment/60 block mb-1">سعر الإطلاق الحصري في Mate Page</span>
+                                <div class="flex items-baseline gap-3">
+                                    <span id="heroCurrentPrice" class="text-3xl sm:text-4xl font-black text-ivory">49 ر.س</span>
+                                    <span id="heroOldPrice" class="text-base sm:text-lg text-parchment/40 line-through font-semibold">85 ر.س</span>
+                                    <span class="bg-fischerOrange/20 text-fischerOrange border border-fischerOrange/40 text-xs font-bold px-2.5 py-1 rounded-lg">خصم 42%</span>
+                                </div>
+                            </div>
+                            <div class="text-right text-xs text-parchment/75 space-y-1">
+                                <div class="flex items-center gap-1.5">
+                                    <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+                                    <span>تحميل فوري بعد الدفع</span>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+                                    <span>يعمل على الجوال، الآيباد والكمبيوتر</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Primary & Secondary CTAs -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <button onclick="openCheckoutModal()" class="w-full sm:w-auto flex items-center justify-center gap-3 bg-gradient-to-l from-fischerOrange to-fischerOrangeDark hover:brightness-110 text-white font-bold text-base sm:text-lg px-8 py-4 rounded-2xl shadow-orange-glow transition-all transform hover:-translate-y-0.5 active:scale-95">
+                            <span>اشترِ النسخة الإلكترونية الآن</span>
+                            <svg class="w-5 h-5 rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </button>
+
+                        <button onclick="openSampleModal()" class="w-full sm:w-auto flex items-center justify-center gap-2.5 bg-slateDark hover:bg-slateDark/80 text-parchment hover:text-goldLight font-bold text-base px-7 py-4 rounded-2xl border border-parchment/15 hover:border-brushedGold/40 transition-all">
+                            <svg class="w-5 h-5 text-brushedGold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                            <span>اقرأ عينة مجانية</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Left Column: Custom 3D Interactive Book Mockup (5 Cols) -->
+                <div class="lg:col-span-5 flex flex-col items-center justify-center relative py-6">
+                    
+                    <!-- Floating Stat Badge Top Right -->
+                    <div class="animate-float absolute -top-2 right-2 sm:right-6 z-20 glass-panel px-4 py-2.5 rounded-2xl border border-brushedGold/30 shadow-xl flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-brushedGold/20 text-goldLight flex items-center justify-center font-bold text-sm">♞</div>
+                        <div>
+                            <div class="text-xs font-extrabold text-ivory">+300 لغز تكتيكي</div>
+                            <div class="text-[10px] text-parchment/60">تدريب عملي متدرج</div>
+                        </div>
+                    </div>
+
+                    <!-- Floating Stat Badge Bottom Left -->
+                    <div class="animate-float-delayed absolute bottom-10 left-0 sm:left-4 z-20 glass-panel px-4 py-2.5 rounded-2xl border border-fischerOrange/40 shadow-xl flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-fischerOrange/20 text-fischerOrange flex items-center justify-center">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <div>
+                            <div class="text-xs font-extrabold text-ivory">تحميل فوري</div>
+                            <div class="text-[10px] text-parchment/60">PDF عالي الدقة + EPUB</div>
+                        </div>
+                    </div>
+
+                    <!-- 3D Book Container -->
+                    <div class="book-scene my-4" onclick="openSampleModal()" title="اضغط لمعاينة عينة من الكتاب">
+                        <div class="book-3d">
+                            <!-- Book Back -->
+                            <div class="book-back"></div>
+                            <!-- Book Pages -->
+                            <div class="book-pages"></div>
+                            <!-- Book Spine -->
+                            <div class="book-spine">
+                                <span class="text-ivory/90 font-serifArabic text-xs font-bold tracking-widest" style="writing-mode: vertical-rl;">
+                                    فيشر يعلمك الشطرنج • بوبي فيشر
+                                </span>
+                            </div>
+
+                            <!-- Book Front Cover (Faithfully inspired by the classic vintage orange cover) -->
+                            <div class="book-front flex flex-col justify-between relative select-none">
+                                <!-- Vintage Crease & Paper Texture -->
+                                <div class="vintage-texture absolute inset-0 pointer-events-none z-20"></div>
+                                
+                                <!-- Subtle Spine Hinge Groove -->
+                                <div class="absolute top-0 right-0 bottom-0 w-4 bg-gradient-to-l from-black/35 via-white/10 to-transparent z-20 pointer-events-none"></div>
+
+                                <!-- Top Calligraphy Area -->
+                                <div class="relative z-10 pt-8 sm:pt-10 px-6 text-center">
+                                    <!-- Decorative Vintage Arabic Calligraphy SVG Title -->
+                                    <div class="mb-2">
+                                        <h2 class="font-serifArabic text-3xl sm:text-4xl font-bold text-ivory drop-shadow-[0_2px_4px_rgba(0,0,0,0.45)] tracking-wide leading-snug">
+                                            فيشر يعلّمك الشطرنج
+                                        </h2>
+                                        <!-- Decorative Calligraphic Flourish Line -->
+                                        <svg class="w-44 h-3 mx-auto text-ivory/80 mt-1" viewBox="0 0 200 12" fill="none">
+                                            <path d="M5 6 Q 50 1, 100 6 T 195 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                            <circle cx="100" cy="6" r="2.5" fill="currentColor"></circle>
+                                        </svg>
+                                    </div>
+                                    <p class="font-serifArabic text-sm sm:text-base text-ivory/90 italic drop-shadow">
+                                        ترجمة: عبد الرحمن بعلبكي
+                                    </p>
+                                </div>
+
+                                <!-- Bottom Half: Dramatic Overlapping Black & Cream Chess Silhouettes SVG -->
+                                <div class="relative z-10 w-full h-60 sm:h-72 mt-auto overflow-hidden">
+                                    <svg viewBox="0 0 320 260" class="w-full h-full object-cover object-bottom" preserveAspectRatio="xMidYMax slice">
+                                        <!-- Back Row Cream/Ivory Pieces -->
+                                        <!-- Left Cream King -->
+                                        <g fill="#F3ECE0" stroke="#9E2E10" stroke-width="1.5">
+                                            <rect x="38" y="38" width="8" height="24" rx="1"></rect>
+                                            <rect x="30" y="46" width="24" height="8" rx="1"></rect>
+                                            <path d="M22 65 H62 L56 85 H28 Z"></path>
+                                            <path d="M26 85 L18 195 H66 L58 85 Z"></path>
+                                            <rect x="12" y="195" width="60" height="14" rx="3"></rect>
+                                        </g>
+
+                                        <!-- Center-Right Tall Cream Queen -->
+                                        <g fill="#F3ECE0" stroke="#9E2E10" stroke-width="1.5">
+                                            <circle cx="168" cy="34" r="6"></circle>
+                                            <path d="M142 44 L152 66 H184 L194 44 L178 55 L168 42 L158 55 Z"></path>
+                                            <rect x="148" y="66" width="40" height="8" rx="2"></rect>
+                                            <path d="M153 74 L142 210 H194 L183 74 Z"></path>
+                                            <rect x="134" y="210" width="68" height="16" rx="3"></rect>
+                                        </g>
+
+                                        <!-- Far Right Cream Bishop -->
+                                        <g fill="#F3ECE0" stroke="#9E2E10" stroke-width="1.5">
+                                            <circle cx="288" cy="95" r="5"></circle>
+                                            <path d="M272 135 C272 110, 304 110, 304 135 C304 148, 296 155, 296 155 H280 C280 155, 272 148, 272 135 Z"></path>
+                                            <path d="M276 155 L268 235 H308 L300 155 Z"></path>
+                                        </g>
+
+                                        <!-- Midground Black/Charcoal Textured Pieces -->
+                                        <!-- Center-Left Black Bishop -->
+                                        <g fill="#1D1B1A" stroke="#F3ECE0" stroke-width="1.2">
+                                            <circle cx="112" cy="56" r="5.5"></circle>
+                                            <path d="M94 98 C94 70, 130 70, 130 98 C130 112, 122 120, 122 120 H102 C102 120, 94 112, 94 98 Z"></path>
+                                            <line x1="112" y1="78" x2="122" y2="94" stroke="#D94E28" stroke-width="2.5"></line>
+                                            <path d="M98 120 L88 230 H136 L126 120 Z"></path>
+                                        </g>
+
+                                        <!-- Right Tall Black King -->
+                                        <g fill="#1D1B1A" stroke="#F3ECE0" stroke-width="1.2">
+                                            <rect x="246" y="26" width="9" height="26" rx="1"></rect>
+                                            <rect x="237" y="34" width="27" height="9" rx="1"></rect>
+                                            <path d="M228 55 H273 L266 78 H235 Z"></path>
+                                            <path d="M233 78 L222 225 H279 L268 78 Z"></path>
+                                            <rect x="215" y="225" width="71" height="16" rx="3"></rect>
+                                        </g>
+
+                                        <!-- Mid-Right Black Rook -->
+                                        <g fill="#1D1B1A" stroke="#F3ECE0" stroke-width="1.2">
+                                            <path d="M192 92 H202 V102 H210 V92 H220 V102 H228 V92 H238 V116 H192 Z"></path>
+                                            <path d="M196 116 L189 235 H241 L234 116 Z"></path>
+                                        </g>
+
+                                        <!-- Foreground Overlapping Dramatic Pieces -->
+                                        <!-- Left Black Queen -->
+                                        <g fill="#181615" stroke="#F3ECE0" stroke-width="1.5">
+                                            <path d="M58 118 L68 140 H104 L114 118 L96 130 L86 115 L76 130 Z"></path>
+                                            <path d="M68 140 L56 260 H116 L104 140 Z"></path>
+                                        </g>
+
+                                        <!-- Center-Left Cream Pawn -->
+                                        <g fill="#F3ECE0" stroke="#9E2E10" stroke-width="1.5">
+                                            <circle cx="152" cy="145" r="14"></circle>
+                                            <rect x="136" y="160" width="32" height="7" rx="3"></rect>
+                                            <path d="M138 167 L126 260 H178 L166 167 Z"></path>
+                                        </g>
+
+                                        <!-- Center Black Rook with Vintage Circle Detail -->
+                                        <g fill="#181615" stroke="#F3ECE0" stroke-width="1.5">
+                                            <path d="M116 172 H128 V184 H138 V172 H150 V184 H160 V172 H172 V198 H116 Z"></path>
+                                            <path d="M122 198 L114 260 H174 L166 198 Z"></path>
+                                            <circle cx="144" cy="234" r="13" fill="#F3ECE0" stroke="#D94E28" stroke-width="2"></circle>
+                                        </g>
+
+                                        <!-- Right Cream Rook -->
+                                        <g fill="#F3ECE0" stroke="#9E2E10" stroke-width="1.5">
+                                            <path d="M214 176 H225 V187 H234 V176 H245 V187 H254 V176 H265 V200 H214 Z"></path>
+                                            <path d="M220 200 L212 260 H267 L259 200 Z"></path>
+                                        </g>
+
+                                        <!-- Far Left Cream Knight Silhouette -->
+                                        <g fill="#F3ECE0" stroke="#9E2E10" stroke-width="1.5">
+                                            <path d="M14 260 L20 205 L10 192 L28 172 L46 180 L42 205 L54 260 Z"></path>
+                                        </g>
+                                    </svg>
+                                </div>
+
+                                <!-- Hover Quick Preview Pill on Cover -->
+                                <div class="absolute bottom-4 inset-x-0 flex justify-center z-30">
+                                    <span class="bg-obsidian/85 backdrop-blur-md text-ivory border border-goldLight/40 text-xs font-bold px-4 py-2 rounded-full shadow-lg flex items-center gap-1.5 hover:bg-fischerOrange transition-colors">
+                                        <svg class="w-3.5 h-3.5 text-goldLight" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                        <span>معاينة سريعة / تصفح عينة</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-parchment/50 mt-3">مرر المؤشر لتحريك الغلاف ثلاثي الأبعاد أو اضغط لتجربة ألغاز الكتاب</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 3. WHY THIS BOOK (PROGRAMMED LEARNING METHOD) ==================== -->
+    <section id="why-this-book" class="py-20 bg-charcoal/70 border-y border-parchment/10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14 space-y-3">
+                <span class="text-fischerOrange font-bold text-sm tracking-wider">لماذا يوصي به أساتذة الشطرنج؟</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-ivory">عبقرية التعلم المبرمج لبوبي فيشر</h2>
+                <p class="text-parchment/75 text-base">
+                    بخلاف الكتب التقليدية المملة، صمم بوبي فيشر هذا الكتاب بأسلوب «التعليم المبرمج» حيث تتفاعل مع كل صفحة وتحل اللغز بنفسك قبل الانتقال للفكرة التالية.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <div class="glass-panel p-6 rounded-2xl border border-parchment/10 hover:border-fischerOrange/50 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-fischerOrange/15 text-fischerOrange flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-ivory mb-2">التعلم المبرمج خطوة بخطوة</h3>
+                    <p class="text-sm text-parchment/70 leading-relaxed">
+                        كل صفحة تطرح عليك موقفاً على الرقعة مع سؤال مباشر، وتعرض الإجابة والشرح في الصفحة التالية لترسيخ الفهم البصري فوراً.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-panel p-6 rounded-2xl border border-parchment/10 hover:border-brushedGold/50 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-brushedGold/15 text-goldLight flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-ivory mb-2">إتقان أنماط «كش مات»</h3>
+                    <p class="text-sm text-parchment/70 leading-relaxed">
+                        ستتعلم كيف ترى التهديدات القاتلة وتنفذ كش مات في نقلة، نقلتين، وثلاث نقلات، بما في ذلك كش مات الصف الخلفي والتضحيات الجريئة.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-panel p-6 rounded-2xl border border-parchment/10 hover:border-fischerOrange/50 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-fischerOrange/15 text-fischerOrange flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-ivory mb-2">بدون حفظ نظري ممل</h3>
+                    <p class="text-sm text-parchment/70 leading-relaxed">
+                        لا حاجة لمعرفة الترميز الجبري المعقد مسبقاً؛ الكتاب مصمم برسوم توضيحية واضحة تجعله مثالياً للمبتدئين الطموحين والمتوسطين.
+                    </p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="glass-panel p-6 rounded-2xl border border-parchment/10 hover:border-brushedGold/50 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-brushedGold/15 text-goldLight flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-ivory mb-2">نسخة رقمية فائقة الوضوح</h3>
+                    <p class="text-sm text-parchment/70 leading-relaxed">
+                        تمت إعادة تنسيق الرسوم والرقعة بدقة عالية لتستمتع بالقراءة وحل الألغاز على هاتفك، جهازك اللوحي، أو حاسوبك في أي وقت.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 4. CHAPTERS / TABLE OF CONTENTS ACCORDION ==================== -->
+    <section id="chapters" class="py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 space-y-3">
+                <span class="text-goldLight font-bold text-sm">رحلة متكاملة من الأساسيات إلى الحسم</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-ivory">فهرس ومحتويات الكتاب</h2>
+                <p class="text-parchment/70 text-sm sm:text-base">أكثر من 280 صفحة من التدريبات التكتيكية المقسمة بعناية فائقة</p>
+            </div>
+
+            <div class="space-y-4" id="chaptersAccordion">
+                <!-- Chapter 1 -->
+                <div class="glass-panel rounded-2xl border border-parchment/10 overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 sm:p-6 text-right hover:bg-white/[0.02] transition-colors">
+                        <div class="flex items-center gap-4">
+                            <span class="w-9 h-9 rounded-xl bg-fischerOrange/20 text-fischerOrange font-extrabold flex items-center justify-center text-sm shrink-0">01</span>
+                            <div>
+                                <h3 class="text-base sm:text-lg font-bold text-ivory">أساسيات الرقعة، الهجوم والدفاع</h3>
+                                <span class="text-xs text-parchment/55">42 تمريناً تمهيدياً</span>
+                            </div>
+                        </div>
+                        <svg class="w-5 h-5 text-parchment/60 transform transition-transform duration-300 rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="px-6 pb-6 text-sm text-parchment/80 leading-relaxed border-t border-parchment/5 pt-4">
+                        مراجعة سريعة لقواعد الحركة وقيمة القطع، يليها مباشرة تعريف مفهوم «التهديد»، كيف تحمي ملكك، وكيف تكتشف المربعات غير المحمية في معسكر الخصم.
+                    </div>
+                </div>
+
+                <!-- Chapter 2 -->
+                <div class="glass-panel rounded-2xl border border-parchment/10 overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 sm:p-6 text-right hover:bg-white/[0.02] transition-colors">
+                        <div class="flex items-center gap-4">
+                            <span class="w-9 h-9 rounded-xl bg-fischerOrange/20 text-fischerOrange font-extrabold flex items-center justify-center text-sm shrink-0">02</span>
+                            <div>
+                                <h3 class="text-base sm:text-lg font-bold text-ivory">أنماط كش مات الأساسية</h3>
+                                <span class="text-xs text-parchment/55">65 لغزاً تكتيكياً</span>
+                            </div>
+                        </div>
+                        <svg class="w-5 h-5 text-parchment/60 transform transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="hidden px-6 pb-6 text-sm text-parchment/80 leading-relaxed border-t border-parchment/5 pt-4">
+                        تدريب مكثف على تمييز وضعية كش مات في نقلة واحدة، تعاون الوزير مع القطع الأخرى، واستغلال قيود حركة ملك الخصم في الزوايا والأطراف.
+                    </div>
+                </div>
+
+                <!-- Chapter 3 -->
+                <div class="glass-panel rounded-2xl border border-parchment/10 overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 sm:p-6 text-right hover:bg-white/[0.02] transition-colors">
+                        <div class="flex items-center gap-4">
+                            <span class="w-9 h-9 rounded-xl bg-fischerOrange/20 text-fischerOrange font-extrabold flex items-center justify-center text-sm shrink-0">03</span>
+                            <div>
+                                <h3 class="text-base sm:text-lg font-bold text-ivory">كش مات الصف الخلفي (Back Rank Mate)</h3>
+                                <span class="text-xs text-parchment/55">78 لغزاً متدرج الصعوبة</span>
+                            </div>
+                        </div>
+                        <svg class="w-5 h-5 text-parchment/60 transform transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="hidden px-6 pb-6 text-sm text-parchment/80 leading-relaxed border-t border-parchment/5 pt-4">
+                        أحد أشهر أسلحة بوبي فيشر! كيف تستغل حبس الملك خلف بيادقه بعد التبييت، وكيف تشتت المدافعين عن الصف الأخير باستخدام الرخ والوزير.
+                    </div>
+                </div>
+
+                <!-- Chapter 4 -->
+                <div class="glass-panel rounded-2xl border border-parchment/10 overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 sm:p-6 text-right hover:bg-white/[0.02] transition-colors">
+                        <div class="flex items-center gap-4">
+                            <span class="w-9 h-9 rounded-xl bg-fischerOrange/20 text-fischerOrange font-extrabold flex items-center justify-center text-sm shrink-0">04</span>
+                            <div>
+                                <h3 class="text-base sm:text-lg font-bold text-ivory">التضحيات وكشف غطاء الملك</h3>
+                                <span class="text-xs text-parchment/55">70 لغزاً متقدماً</span>
+                            </div>
+                        </div>
+                        <svg class="w-5 h-5 text-parchment/60 transform transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="hidden px-6 pb-6 text-sm text-parchment/80 leading-relaxed border-t border-parchment/5 pt-4">
+                        تعلم متى تضحي بوزيرك أو رخك لفتح خطوط الهجوم، وكيفية تنفيذ الهجمات المزدوجة والكش بالكشف لإنهاء المباراة بأسلوب الأبطال.
+                    </div>
+                </div>
+
+                <!-- Chapter 5 -->
+                <div class="glass-panel rounded-2xl border border-parchment/10 overflow-hidden">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 sm:p-6 text-right hover:bg-white/[0.02] transition-colors">
+                        <div class="flex items-center gap-4">
+                            <span class="w-9 h-9 rounded-xl bg-brushedGold/20 text-goldLight font-extrabold flex items-center justify-center text-sm shrink-0">05</span>
+                            <div>
+                                <h3 class="text-base sm:text-lg font-bold text-ivory">اختبارات التقييم النهائية الشاملة</h3>
+                                <span class="text-xs text-parchment/55">50 موقفاً حاسماً لقياس مستواك</span>
+                            </div>
+                        </div>
+                        <svg class="w-5 h-5 text-parchment/60 transform transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="hidden px-6 pb-6 text-sm text-parchment/80 leading-relaxed border-t border-parchment/5 pt-4">
+                        مجموعة مختارة من المواقف المتنوعة بدون تلميحات مسبقة، تختبر قدرتك الحقيقية على إيجاد النقلة الفائزة تحت الضغط.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 5. UPCOMING RELEASES TEASER ("قريباً في MATE PAGE") ==================== -->
+    <section id="upcoming" class="py-20 bg-charcoal/80 border-t border-parchment/10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-panel rounded-3xl p-8 sm:p-12 border border-brushedGold/20 relative overflow-hidden">
+                <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-fischerOrange/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+                    <div class="lg:col-span-7 space-y-4">
+                        <span class="inline-block px-3.5 py-1 rounded-full bg-brushedGold/15 text-goldLight text-xs font-bold border border-brushedGold/30">
+                            قريباً في Mate Page
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-black text-ivory">
+                            نبني المكتبة العربية الأرقى لعشاق الشطرنج
+                        </h2>
+                        <p class="text-parchment/75 text-sm sm:text-base leading-relaxed">
+                            انطلقنا اليوم بكتابنا الحصري الأول <strong class="text-fischerOrange">«فيشر يعلمك الشطرنج»</strong>. ونعمل حالياً على ترجمة وتنسيق روائع الشطرنج العالمية القادمة (مثل: <em>مبارياتي الـ 60 التي لا تُنسى</em> و<em>أساسيات نهاية اللعب لكابابلانكا</em>).
+                        </p>
+
+                        <!-- Newsletter / Waitlist Form -->
+                        <form onsubmit="handleNotifySubmit(event)" class="flex flex-col sm:flex-row gap-3 pt-2 max-w-lg">
+                            <input type="email" id="notifyEmail" required="" placeholder="أدخل بريدك الإلكتروني ليصلك إشعار الإصدارات..." class="flex-1 bg-obsidian/90 text-ivory placeholder-parchment/40 text-sm px-4 py-3.5 rounded-xl border border-parchment/15 focus:outline-none focus:border-brushedGold">
+                            <button type="submit" class="bg-brushedGold hover:bg-goldLight text-obsidian font-extrabold text-sm px-6 py-3.5 rounded-xl transition-all shrink-0">
+                                نبّهني عند الصدور
+                            </button>
+                        </form>
+                        <p id="notifyFeedback" class="text-xs text-emerald-400 font-semibold hidden"></p>
+                    </div>
+
+                    <!-- Blurred Teaser Cards -->
+                    <div class="lg:col-span-5 grid grid-cols-2 gap-4">
+                        <div class="bg-obsidian/80 border border-parchment/10 rounded-2xl p-4 text-center space-y-2 relative overflow-hidden">
+                            <div class="w-12 h-16 mx-auto rounded bg-slateDark border border-parchment/15 flex items-center justify-center text-parchment/30 font-serifArabic text-lg">♛</div>
+                            <div class="text-xs font-bold text-parchment/70">مبارياتي الـ 60 التي لا تُنسى</div>
+                            <span class="inline-block text-[10px] bg-white/5 text-parchment/50 px-2.5 py-0.5 rounded-full">قيد الإعداد</span>
+                        </div>
+                        <div class="bg-obsidian/80 border border-parchment/10 rounded-2xl p-4 text-center space-y-2 relative overflow-hidden">
+                            <div class="w-12 h-16 mx-auto rounded bg-slateDark border border-parchment/15 flex items-center justify-center text-parchment/30 font-serifArabic text-lg">♜</div>
+                            <div class="text-xs font-bold text-parchment/70">أساسيات الشطرنج - كابابلانكا</div>
+                            <span class="inline-block text-[10px] bg-white/5 text-parchment/50 px-2.5 py-0.5 rounded-full">قيد الإعداد</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 6. FAQ SECTION ==================== -->
+    <section id="faq" class="py-20">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 space-y-2">
+                <h2 class="text-3xl font-black text-ivory">الأسئلة الشائعة</h2>
+                <p class="text-parchment/65 text-sm">كل ما تحتاج معرفته حول الشراء والتحميل الفوري</p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="glass-panel rounded-2xl p-5 border border-parchment/10">
+                    <h3 class="font-bold text-ivory text-base mb-1.5">كيف سأحصل على الكتاب بعد إتمام الدفع الإلكتروني؟</h3>
+                    <p class="text-sm text-parchment/75 leading-relaxed">
+                        بمجرد تأكيد الدفع، سيظهر لك زر التحميل المباشر فوراً على الشاشة، كما ستصلك نسخة تلقائية عبر بريدك الإلكتروني بصيغتي <strong class="text-parchment">PDF</strong> و <strong class="text-parchment">EPUB</strong> لتحتفظ بها للأبد.
+                    </p>
+                </div>
+
+                <div class="glass-panel rounded-2xl p-5 border border-parchment/10">
+                    <h3 class="font-bold text-ivory text-base mb-1.5">هل الكتاب مناسب للمبتدئين تماماً في الشطرنج؟</h3>
+                    <p class="text-sm text-parchment/75 leading-relaxed">
+                        نعم 100%. صمم بوبي فيشر هذا الكتاب ليبدأ معك من الصفر بأسلوب تفاعلي ممتع، كما يفيد اللاعبين المتوسطين في صقل رؤيتهم التكتيكية وسرعة إيجاد كش مات.
+                    </p>
+                </div>
+
+                <div class="glass-panel rounded-2xl p-5 border border-parchment/10">
+                    <h3 class="font-bold text-ivory text-base mb-1.5">ما هي وسائل الدفع الإلكتروني المتاحة في Mate Page؟</h3>
+                    <p class="text-sm text-parchment/75 leading-relaxed">
+                        نوفر بوابة دفع إلكترونية مشفرة تدعم بطاقات <strong class="text-parchment">مدى (Mada)</strong>، <strong class="text-parchment">Apple Pay</strong>، البطاقات الائتمانية (<strong class="text-parchment">Visa / Mastercard</strong>)، بالإضافة إلى <strong class="text-parchment">STC Pay</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 7. MINIMALIST LUXURY FOOTER ==================== -->
+    <footer class="bg-obsidian border-t border-parchment/10 pt-12 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-parchment/10">
+                <!-- Brand -->
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-fischerOrange flex items-center justify-center text-ivory">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 22H5V20H19V22ZM17 18H7L8 14H16L17 18ZM15 12H9L7.5 6L12 8.5L16.5 6L15 12ZM12 2L13.5 4.5L12 6L10.5 4.5L12 2Z"></path>
+                        </svg>
+                    </div>
+                    <span class="font-brand text-xl font-bold text-ivory">MATE <span class="text-fischerOrange">PAGE</span></span>
+                </div>
+
+                <!-- Payment Badges -->
+                <div class="flex flex-wrap items-center justify-center gap-2.5 text-xs font-latin font-bold text-parchment/80">
+                    <span class="px-3 py-1.5 rounded-lg bg-slateDark border border-parchment/10">mada مدى</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-slateDark border border-parchment/10">Apple Pay</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-slateDark border border-parchment/10">VISA</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-slateDark border border-parchment/10">Mastercard</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-slateDark border border-parchment/10">STC Pay</span>
+                </div>
+
+                <!-- Support Contact -->
+                <div class="text-xs text-parchment/60">
+                    الدعم الفني: <a href="mailto:support@matepage.store" class="text-goldLight hover:underline font-latin">support@matepage.store</a>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-parchment/45 gap-3">
+                <p>© 2026 Mate Page (ميت بيج). جميع الحقوق محفوظة.</p>
+                <p>متجر متخصص في كتب الشطرنج الإلكترونية</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== INTERACTIVE FREE SAMPLE MODAL (PLAYABLE PUZZLES) ==================== -->
+    <div id="sampleModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+        <div class="bg-charcoal border border-brushedGold/30 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl animate-fadeIn">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between px-6 py-4 bg-slateDark border-b border-parchment/10">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-fischerOrange"></span>
+                    <h3 class="font-bold text-ivory text-base sm:text-lg">معاينة تفاعلية من الكتاب — جرّب أسلوب فيشر</h3>
+                </div>
+                <button onclick="closeSampleModal()" class="text-parchment/60 hover:text-white p-1.5 rounded-lg hover:bg-white/10">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 space-y-6">
+                <!-- Puzzle Tabs -->
+                <div class="flex items-center justify-between gap-2 bg-obsidian p-1.5 rounded-xl border border-parchment/10">
+                    <button id="puzzleTab1" onclick="loadPuzzle(0)" class="flex-1 py-2 px-3 rounded-lg text-xs sm:text-sm font-bold bg-fischerOrange text-white transition-all">
+                        اللغز الأول: كش مات الصف الخلفي
+                    </button>
+                    <button id="puzzleTab2" onclick="loadPuzzle(1)" class="flex-1 py-2 px-3 rounded-lg text-xs sm:text-sm font-bold text-parchment/70 hover:text-white transition-all">
+                        اللغز الثاني: هجوم الوزير الحاسم
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                    <!-- Interactive Mini Chessboard (5x5 Tactical Cutout) -->
+                    <div class="md:col-span-6 flex flex-col items-center">
+                        <div id="miniBoard" class="grid grid-cols-5 w-64 h-64 sm:w-72 sm:h-72 rounded-xl overflow-hidden border-4 border-slateDark shadow-2xl select-none" dir="ltr">
+                            <!-- Squares injected by JS -->
+                        </div>
+                        <span class="text-[11px] text-parchment/50 mt-2">اضغط على القطعة البيضاء ثم اضغط على مربع «كش مات»</span>
+                    </div>
+
+                    <!-- Book Page Excerpt & Instructions -->
+                    <div class="md:col-span-6 space-y-4">
+                        <div class="bg-parchment text-obsidian p-5 rounded-2xl shadow-inner font-serifArabic">
+                            <div class="flex items-center justify-between text-xs font-sans font-bold text-fischerOrange mb-2">
+                                <span id="puzzlePageNum">صفحة 48 • الفصل الثالث</span>
+                                <span>الأبيض يلعب ويفوز</span>
+                            </div>
+                            <p id="puzzlePrompt" class="text-base sm:text-lg font-bold leading-relaxed">
+                                الملك الأسود محاصر خلف بيادقه في الصف الأخير. هل يمكنك توجيه ضربة «كش مات» في نقلة واحدة باستخدام الرخ الأبيض؟
+                            </p>
+                        </div>
+
+                        <!-- Feedback Box -->
+                        <div id="puzzleFeedback" class="p-4 rounded-xl bg-slateDark border border-parchment/15 text-sm text-parchment/85">
+                            💡 <strong>تلميح:</strong> حدد القطعة البيضاء المهاجمة أولاً، ثم اختر المربع الذي يحاصر الملك الأسود بالكامل.
+                        </div>
+
+                        <button onclick="closeSampleModal(); openCheckoutModal();" class="w-full py-3.5 px-5 rounded-xl bg-fischerOrange hover:bg-fischerOrangeDark text-white font-bold text-sm shadow-orange-glow transition-all">
+                            أعجبك الأسلوب؟ احصل على الكتاب كاملاً (+300 لغز)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== INTERACTIVE ELECTRONIC CHECKOUT MODAL ==================== -->
+    <div id="checkoutModal" class="fixed inset-0 z-50 items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto hidden">
+        <div class="bg-charcoal border border-parchment/15 rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl my-auto">
+            
+            <!-- Checkout Header -->
+            <div class="flex items-center justify-between px-6 py-4 bg-slateDark border-b border-parchment/10">
+                <div class="flex items-center gap-2.5">
+                    <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    <h3 class="font-bold text-ivory text-base sm:text-lg">الدفع الإلكتروني الآمن • Mate Page</h3>
+                </div>
+                <button onclick="closeCheckoutModal()" class="text-parchment/60 hover:text-white p-1.5 rounded-lg hover:bg-white/10">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <!-- Step 1: Checkout Form View -->
+            <div id="checkoutFormView" class="p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- Order Summary (5 Cols) -->
+                <div class="lg:col-span-5 bg-obsidian/90 rounded-2xl p-5 border border-parchment/10 flex flex-col justify-between space-y-5">
+                    <div class="space-y-4">
+                        <span class="text-xs font-bold text-goldLight uppercase tracking-wider">ملخص الطلب</span>
+                        
+                        <div class="flex items-center gap-3.5 pb-4 border-b border-parchment/10">
+                            <!-- Mini Cover Thumbnail -->
+                            <div class="w-14 h-20 rounded-md bg-gradient-to-br from-fischerOrange to-fischerOrangeDark flex flex-col items-center justify-center p-1 text-center shrink-0 border border-white/20 shadow">
+                                <span class="font-serifArabic text-[9px] text-white font-bold leading-tight">فيشر يعلمك الشطرنج</span>
+                                <span class="text-sm mt-1">♚</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-ivory text-sm">فيشر يعلمك الشطرنج</h4>
+                                <p class="text-xs text-parchment/60 mt-0.5">نسخة إلكترونية (PDF + EPUB)</p>
+                                <span class="inline-block mt-1.5 text-[10px] bg-emerald-500/15 text-emerald-400 px-2 py-0.5 rounded font-semibold">تسليم رقمي فوري</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2 text-xs sm:text-sm">
+                            <div class="flex justify-between text-parchment/70">
+                                <span>السعر الأساسي</span>
+                                <span id="checkoutOldPrice" class="line-through">85 ر.س</span>
+                            </div>
+                            <div class="flex justify-between text-emerald-400 font-semibold">
+                                <span>خصم الإطلاق الحصري</span>
+                                <span id="checkoutDiscount">-36 ر.س</span>
+                            </div>
+                            <div class="flex justify-between text-parchment/70">
+                                <span>رسوم التوصيل الرقمي</span>
+                                <span>مجاناً</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-parchment/15 flex items-center justify-between">
+                        <span class="font-bold text-parchment">الإجمالي المستحق</span>
+                        <span id="checkoutTotalPrice" class="text-2xl font-black text-fischerOrange">49 ر.س</span>
+                    </div>
+                </div>
+
+                <!-- Customer Details & Payment Methods (7 Cols) -->
+                <form id="paymentForm" onsubmit="processPayment(event)" class="lg:col-span-7 space-y-5">
+                    <!-- Customer Info -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        <div>
+                            <label class="block text-xs font-bold text-parchment/80 mb-1.5">الاسم الكامل *</label>
+                            <input type="text" id="customerName" required="" placeholder="مثال: خالد العتيبي" class="w-full bg-obsidian text-ivory text-sm px-3.5 py-2.5 rounded-xl border border-parchment/15 focus:outline-none focus:border-fischerOrange">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-parchment/80 mb-1.5">البريد الإلكتروني (لإرسال الكتاب) *</label>
+                            <input type="email" id="customerEmail" required="" placeholder="name@example.com" dir="ltr" class="w-full bg-obsidian text-ivory text-sm px-3.5 py-2.5 rounded-xl border border-parchment/15 focus:outline-none focus:border-fischerOrange text-right">
+                        </div>
+                    </div>
+
+                    <!-- Payment Method Selector Tabs -->
+                    <div>
+                        <label class="block text-xs font-bold text-parchment/80 mb-2">اختر وسيلة الدفع الإلكتروني</label>
+                        <div class="grid grid-cols-3 gap-2.5">
+                            <button type="button" onclick="selectPaymentMethod('card')" id="payTabCard" class="py-2.5 px-3 rounded-xl border-2 border-fischerOrange bg-fischerOrange/15 text-ivory text-xs font-bold flex flex-col items-center gap-1 transition-all">
+                                <span>مدى / بطاقة ائتمان</span>
+                                <span class="text-[10px] text-parchment/60 font-latin">Mada • Visa • MC</span>
+                            </button>
+                            <button type="button" onclick="selectPaymentMethod('apple')" id="payTabApple" class="py-2.5 px-3 rounded-xl border border-parchment/15 bg-obsidian text-parchment/75 text-xs font-bold flex flex-col items-center gap-1 hover:border-parchment/40 transition-all">
+                                <span class="font-latin text-sm">Apple Pay</span>
+                                <span class="text-[10px] text-parchment/50">دفع سريع بلمسة</span>
+                            </button>
+                            <button type="button" onclick="selectPaymentMethod('stcpay')" id="payTabStc" class="py-2.5 px-3 rounded-xl border border-parchment/15 bg-obsidian text-parchment/75 text-xs font-bold flex flex-col items-center gap-1 hover:border-parchment/40 transition-all">
+                                <span class="font-latin text-sm">STC Pay</span>
+                                <span class="text-[10px] text-parchment/50">محفظة رقمية</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Payment Panel: Card -->
+                    <div id="panelCard" class="space-y-3.5 bg-obsidian/60 p-4 rounded-2xl border border-parchment/10">
+                        <div>
+                            <label class="block text-[11px] font-semibold text-parchment/70 mb-1">رقم البطاقة</label>
+                            <div class="relative">
+                                <input type="text" id="cardNumber" maxlength="19" placeholder="0000 0000 0000 0000" dir="ltr" oninput="formatCardNumber(this)" class="w-full bg-charcoal text-ivory font-latin text-sm px-3.5 py-2.5 rounded-xl border border-parchment/15 focus:outline-none focus:border-brushedGold tracking-wider">
+                                <span class="absolute right-3 top-2.5 text-xs font-latin font-bold text-goldLight">MADA / VISA</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-semibold text-parchment/70 mb-1">تاريخ الانتهاء</label>
+                                <input type="text" id="cardExpiry" maxlength="5" placeholder="MM/YY" dir="ltr" oninput="formatExpiry(this)" class="w-full bg-charcoal text-ivory font-latin text-sm px-3.5 py-2.5 rounded-xl border border-parchment/15 focus:outline-none focus:border-brushedGold">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-semibold text-parchment/70 mb-1">رمز الأمان (CVV)</label>
+                                <input type="password" id="cardCvv" maxlength="4" placeholder="•••" dir="ltr" class="w-full bg-charcoal text-ivory font-latin text-sm px-3.5 py-2.5 rounded-xl border border-parchment/15 focus:outline-none focus:border-brushedGold">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Payment Panel: Apple Pay -->
+                    <div id="panelApple" class="hidden bg-obsidian/60 p-5 rounded-2xl border border-parchment/10 text-center space-y-2">
+                        <div class="text-2xl font-latin font-bold text-ivory"> Pay</div>
+                        <p class="text-xs text-parchment/70">سيتم تأكيد الدفع مباشرة عبر بصمة الوجه أو الإصبع المرتبطة بحسابك في Apple Pay.</p>
+                    </div>
+
+                    <!-- Dynamic Payment Panel: STC Pay -->
+                    <div id="panelStc" class="hidden bg-obsidian/60 p-4 rounded-2xl border border-parchment/10 space-y-2">
+                        <label class="block text-xs font-semibold text-parchment/80">رقم الجوال المسجل في STC Pay</label>
+                        <input type="tel" id="stcPhone" placeholder="05XXXXXXXX" dir="ltr" class="w-full bg-charcoal text-ivory font-latin text-sm px-3.5 py-2.5 rounded-xl border border-parchment/15 focus:outline-none focus:border-brushedGold">
+                    </div>
+
+                    <!-- Error Message Box (No alert() used!) -->
+                    <div id="checkoutErrorMsg" class="hidden p-3 rounded-xl bg-red-500/15 border border-red-500/40 text-red-300 text-xs font-semibold"></div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="submitPaymentBtn" class="w-full py-4 rounded-2xl bg-gradient-to-l from-fischerOrange to-fischerOrangeDark hover:brightness-110 text-white font-extrabold text-base shadow-orange-glow transition-all flex items-center justify-center gap-2">
+                        <span>إتمام الدفع الآمن</span>
+                        <span id="btnPriceTag">(49 ر.س)</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Step 2: Processing Spinner View -->
+            <div id="checkoutProcessingView" class="hidden p-12 text-center space-y-4">
+                <div class="w-14 h-14 border-4 border-fischerOrange/30 border-t-fischerOrange rounded-full animate-spin mx-auto"></div>
+                <h4 class="text-xl font-bold text-ivory">جاري معالجة الدفع الإلكتروني بأمان...</h4>
+                <p class="text-sm text-parchment/65">يرجى الانتظار لحظات وتجهيز رابط التحميل الخاص بك</p>
+            </div>
+
+            <!-- Step 3: Payment Success & Instant Download View -->
+            <div id="checkoutSuccessView" class="hidden p-8 sm:p-10 text-center space-y-6">
+                <div class="w-16 h-16 rounded-full bg-emerald-500/20 border-2 border-emerald-400 text-emerald-400 flex items-center justify-center mx-auto">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+
+                <div class="space-y-2">
+                    <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full">رقم الفاتورة: <span id="invoiceNumber" class="font-latin">#MP-2026-8841</span></span>
+                    <h3 class="text-2xl sm:text-3xl font-black text-ivory">تم الدفع بنجاح! مبروك الكتاب</h3>
+                    <p class="text-sm text-parchment/75 max-w-md mx-auto">
+                        شكراً لك <strong id="successCustomerName" class="text-ivory"></strong>! تم إرسال نسخة الفاتورة ورابط التحميل الدائم إلى بريدك <span id="successCustomerEmail" class="text-goldLight font-latin"></span>.
+                    </p>
+                </div>
+
+                <!-- Instant Download Card -->
+                <div class="bg-obsidian border border-brushedGold/30 rounded-2xl p-5 max-w-md mx-auto space-y-4">
+                    <div class="flex items-center justify-between text-right">
+                        <div>
+                            <div class="font-bold text-ivory text-sm">فيشر يعلمك الشطرنج (النسخة الكاملة)</div>
+                            <div class="text-xs text-parchment/60">الحجم: 18.4 MB • صيغة PDF + EPUB</div>
+                        </div>
+                        <span class="text-2xl">♚</span>
+                    </div>
+
+                    <button onclick="triggerBookDownload()" class="w-full py-3.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        <span>تحميل الكتاب وإيصال الشراء الآن</span>
+                    </button>
+                    <p id="downloadToast" class="text-xs text-goldLight font-semibold hidden">✓ بدأ تحميل ملف الكتاب وإيصال الشراء على جهازك!</p>
+                </div>
+
+                <button onclick="resetAndCloseCheckout()" class="text-xs text-parchment/60 hover:text-ivory underline">
+                    العودة إلى الرئيسية في Mate Page
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        // 1. Currency Configuration & State
+        const currencies = {
+            SAR: { symbol: 'ر.س', price: 49, oldPrice: 85, discount: '-36 ر.س' },
+            USD: { symbol: '$', price: 13, oldPrice: 23, discount: '-10 $' },
+            AED: { symbol: 'د.إ', price: 48, oldPrice: 84, discount: '-36 د.إ' }
+        };
+        let currentCurrency = 'SAR';
+        let selectedPaymentMethod = 'card';
+
+        function updateCurrency(code) {
+            currentCurrency = code;
+            const c = currencies[code];
+            const formattedCurrent = `${c.price} ${c.symbol}`;
+            const formattedOld = `${c.oldPrice} ${c.symbol}`;
+
+            document.getElementById('heroCurrentPrice').textContent = formattedCurrent;
+            document.getElementById('heroOldPrice').textContent = formattedOld;
+            document.getElementById('checkoutOldPrice').textContent = formattedOld;
+            document.getElementById('checkoutDiscount').textContent = c.discount;
+            document.getElementById('checkoutTotalPrice').textContent = formattedCurrent;
+            document.getElementById('btnPriceTag').textContent = `(${formattedCurrent})`;
+        }
+
+        // 2. Chapters Accordion Toggle
+        function toggleAccordion(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('svg');
+            const isHidden = content.classList.contains('hidden');
+
+            // Close all others for clean UX
+            document.querySelectorAll('#chaptersAccordion > div > div').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('#chaptersAccordion button svg').forEach(svg => svg.classList.remove('rotate-180'));
+
+            if (isHidden) {
+                content.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            }
+        }
+
+        // 3. Upcoming Books Email Notification
+        function handleNotifySubmit(e) {
+            e.preventDefault();
+            const emailInput = document.getElementById('notifyEmail');
+            const feedback = document.getElementById('notifyFeedback');
+            if (emailInput.value.trim()) {
+                feedback.textContent = `✓ تم تسجيل (${emailInput.value}) بنجاح! سنبلغك فور صدور الكتب القادمة في Mate Page.`;
+                feedback.classList.remove('hidden');
+                emailInput.value = '';
+            }
+        }
+
+        // 4. Interactive Free Sample Chess Puzzles Logic
+        const puzzles = [
+            {
+                page: 'صفحة 48 • الفصل الثالث',
+                prompt: 'الملك الأسود محاصر خلف بيادقه في الصف الأخير. هل يمكنك توجيه ضربة «كش مات» في نقلة واحدة باستخدام الرخ الأبيض؟',
+                // 5x5 grid (row 0..4, col 0..4)
+                pieces: {
+                    '0-4': { symbol: '♚', color: 'black', name: 'الملك الأسود' },
+                    '1-3': { symbol: '♟', color: 'black', name: 'بيدق' },
+                    '1-4': { symbol: '♟', color: 'black', name: 'بيدق' },
+                    '3-0': { symbol: '♖', color: 'white', name: 'الرخ الأبيض', isAttacker: true },
+                    '4-2': { symbol: '♔', color: 'white', name: 'الملك الأبيض' }
+                },
+                targetSquare: '0-0',
+                successText: '🎉 أحسنت! نقلة رائعة (Re8#). الرخ الأبيض يهاجم الصف الأخير والملك الأسود لا يملك أي مربع للهروب بسبب بيادقه!'
+            },
+            {
+                page: 'صفحة 112 • الفصل الرابع',
+                prompt: 'الرخ الأبيض يراقب عمود الهروب، والوزير الأبيض جاهز للانقضاض. أين تضع الوزير الأبيض لتحقيق «كش مات» فوري؟',
+                pieces: {
+                    '0-2': { symbol: '♚', color: 'black', name: 'الملك الأسود' },
+                    '1-1': { symbol: '♟', color: 'black', name: 'بيدق' },
+                    '2-3': { symbol: '♖', color: 'white', name: 'الرخ الأبيض' },
+                    '3-2': { symbol: '♕', color: 'white', name: 'الوزير الأبيض', isAttacker: true },
+                    '4-1': { symbol: '♔', color: 'white', name: 'الملك الأبيض' }
+                },
+                targetSquare: '1-2',
+                successText: '🔥 ضربة معلم! (Qd7#). الوزير الأبيض مدعوم بالرخ يطبق كش مات مباشرة في وجه الملك الأسود!'
+            }
+        ];
+
+        let activePuzzleIdx = 0;
+        let selectedAttackerKey = null;
+
+        function openSampleModal() {
+            const modal = document.getElementById('sampleModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            loadPuzzle(0);
+        }
+
+        function closeSampleModal() {
+            const modal = document.getElementById('sampleModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function loadPuzzle(idx) {
+            activePuzzleIdx = idx;
+            selectedAttackerKey = null;
+            const puzzle = puzzles[idx];
+
+            // Update Tabs UI
+            const tab1 = document.getElementById('puzzleTab1');
+            const tab2 = document.getElementById('puzzleTab2');
+            if (idx === 0) {
+                tab1.className = 'flex-1 py-2 px-3 rounded-lg text-xs sm:text-sm font-bold bg-fischerOrange text-white transition-all';
+                tab2.className = 'flex-1 py-2 px-3 rounded-lg text-xs sm:text-sm font-bold text-parchment/70 hover:text-white transition-all';
+            } else {
+                tab2.className = 'flex-1 py-2 px-3 rounded-lg text-xs sm:text-sm font-bold bg-fischerOrange text-white transition-all';
+                tab1.className = 'flex-1 py-2 px-3 rounded-lg text-xs sm:text-sm font-bold text-parchment/70 hover:text-white transition-all';
+            }
+
+            document.getElementById('puzzlePageNum').textContent = puzzle.page;
+            document.getElementById('puzzlePrompt').textContent = puzzle.prompt;
+            const feedback = document.getElementById('puzzleFeedback');
+            feedback.className = 'p-4 rounded-xl bg-slateDark border border-parchment/15 text-sm text-parchment/85';
+            feedback.innerHTML = '💡 <strong>تلميح:</strong> اضغط على القطعة البيضاء المهاجمة أولاً لتحديدها، ثم اضغط على مربع الحسم.';
+
+            renderMiniBoard();
+        }
+
+        function renderMiniBoard() {
+            const boardEl = document.getElementById('miniBoard');
+            boardEl.innerHTML = '';
+            const puzzle = puzzles[activePuzzleIdx];
+
+            for (let r = 0; r < 5; r++) {
+                for (let c = 0; c < 5; c++) {
+                    const key = `${r}-${c}`;
+                    const sq = document.createElement('div');
+                    const isLight = (r + c) % 2 === 0;
+                    sq.className = `flex items-center justify-center text-3xl sm:text-4xl cursor-pointer transition-all ${isLight ? 'chess-sq-light' : 'chess-sq-dark'}`;
+                    
+                    if (selectedAttackerKey === key) {
+                        sq.classList.add('chess-sq-highlight');
+                    }
+                    if (selectedAttackerKey && key === puzzle.targetSquare) {
+                        sq.classList.add('chess-sq-target');
+                    }
+
+                    const piece = puzzle.pieces[key];
+                    if (piece) {
+                        const span = document.createElement('span');
+                        span.textContent = piece.symbol;
+                        span.className = piece.color === 'white' 
+                            ? 'text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.85)] hover:scale-110 transition-transform' 
+                            : 'text-obsidian drop-shadow-[0_1px_1px_rgba(255,255,255,0.4)]';
+                        sq.appendChild(span);
+                    }
+
+                    sq.onclick = () => handleSquareClick(key);
+                    boardEl.appendChild(sq);
+                }
+            }
+        }
+
+        function handleSquareClick(key) {
+            const puzzle = puzzles[activePuzzleIdx];
+            const piece = puzzle.pieces[key];
+            const feedback = document.getElementById('puzzleFeedback');
+
+            // Select white attacker piece
+            if (piece && piece.color === 'white') {
+                if (piece.isAttacker) {
+                    selectedAttackerKey = key;
+                    feedback.className = 'p-4 rounded-xl bg-brushedGold/15 border border-brushedGold/40 text-sm text-goldLight';
+                    feedback.innerHTML = `✓ تم تحديد <strong>${piece.name}</strong>. الآن اضغط على المربع الذي ينفذ كش مات!`;
+                } else {
+                    feedback.className = 'p-4 rounded-xl bg-slateDark border border-parchment/20 text-sm text-parchment/80';
+                    feedback.innerHTML = `هذه القطعة (${piece.name}) ليست قطعة الهجوم الحاسمة في هذا اللغز. جرّب اختيار القطعة الهجومية الأخرى.`;
+                }
+                renderMiniBoard();
+                return;
+            }
+
+            // Attempt move if attacker is selected
+            if (selectedAttackerKey) {
+                if (key === puzzle.targetSquare) {
+                    // Move piece visually
+                    const updatedPieces = { ...puzzle.pieces };
+                    updatedPieces[key] = updatedPieces[selectedAttackerKey];
+                    delete updatedPieces[selectedAttackerKey];
+                    
+                    // Render solved board
+                    const boardEl = document.getElementById('miniBoard');
+                    boardEl.innerHTML = '';
+                    for (let r = 0; r < 5; r++) {
+                        for (let c = 0; c < 5; c++) {
+                            const k = `${r}-${c}`;
+                            const sq = document.createElement('div');
+                            const isLight = (r + c) % 2 === 0;
+                            sq.className = `flex items-center justify-center text-3xl sm:text-4xl ${isLight ? 'chess-sq-light' : 'chess-sq-dark'} ${k === key ? 'chess-sq-highlight' : ''}`;
+                            if (updatedPieces[k]) {
+                                const span = document.createElement('span');
+                                span.textContent = updatedPieces[k].symbol;
+                                span.className = updatedPieces[k].color === 'white'
+                                    ? 'text-white drop-shadow-[0_2px_3px_rgba(0,0,0,0.85)]'
+                                    : 'text-obsidian';
+                                sq.appendChild(span);
+                            }
+                            boardEl.appendChild(sq);
+                        }
+                    }
+
+                    feedback.className = 'p-4 rounded-xl bg-emerald-500/20 border border-emerald-400 text-sm text-emerald-200 font-semibold';
+                    feedback.innerHTML = puzzle.successText;
+                    selectedAttackerKey = null;
+                } else {
+                    feedback.className = 'p-4 rounded-xl bg-fischerOrange/20 border border-fischerOrange/50 text-sm text-orange-200';
+                    feedback.innerHTML = '❌ هذه النقلة لا تُنهي المباراة بكش مات فوري! فكر في حصار الملك الأسود بالكامل.';
+                }
+            }
+        }
+
+        // 5. Electronic Checkout Modal Logic
+        function openCheckoutModal() {
+            const modal = document.getElementById('checkoutModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.getElementById('checkoutErrorMsg').classList.add('hidden');
+        }
+
+        function closeCheckoutModal() {
+            const modal = document.getElementById('checkoutModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            const tabs = { card: 'payTabCard', apple: 'payTabApple', stcpay: 'payTabStc' };
+            const panels = { card: 'panelCard', apple: 'panelApple', stcpay: 'panelStc' };
+
+            Object.keys(tabs).forEach(key => {
+                const tabEl = document.getElementById(tabs[key]);
+                const panelEl = document.getElementById(panels[key]);
+                if (key === method) {
+                    tabEl.className = 'py-2.5 px-3 rounded-xl border-2 border-fischerOrange bg-fischerOrange/15 text-ivory text-xs font-bold flex flex-col items-center gap-1 transition-all';
+                    panelEl.classList.remove('hidden');
+                } else {
+                    tabEl.className = 'py-2.5 px-3 rounded-xl border border-parchment/15 bg-obsidian text-parchment/75 text-xs font-bold flex flex-col items-center gap-1 hover:border-parchment/40 transition-all';
+                    panelEl.classList.add('hidden');
+                }
+            });
+            document.getElementById('checkoutErrorMsg').classList.add('hidden');
+        }
+
+        function formatCardNumber(input) {
+            let v = input.value.replace(/\D/g, '').substring(0, 16);
+            input.value = v.replace(/(.{4})/g, '$1 ').trim();
+        }
+
+        function formatExpiry(input) {
+            let v = input.value.replace(/\D/g, '').substring(0, 4);
+            if (v.length >= 3) {
+                input.value = v.substring(0, 2) + '/' + v.substring(2);
+            } else {
+                input.value = v;
+            }
+        }
+
+        function processPayment(e) {
+            e.preventDefault();
+            const errorBox = document.getElementById('checkoutErrorMsg');
+            const name = document.getElementById('customerName').value.trim();
+            const email = document.getElementById('customerEmail').value.trim();
+
+            if (!name || !email) {
+                errorBox.textContent = 'يرجى إدخال الاسم الكامل والبريد الإلكتروني لإرسال نسخة الكتاب.';
+                errorBox.classList.remove('hidden');
+                return;
+            }
+
+            if (selectedPaymentMethod === 'card') {
+                const cardNum = document.getElementById('cardNumber').value.replace(/\s/g, '');
+                const expiry = document.getElementById('cardExpiry').value.trim();
+                const cvv = document.getElementById('cardCvv').value.trim();
+                if (cardNum.length < 12 || expiry.length < 4 || cvv.length < 3) {
+                    errorBox.textContent = 'يرجى إدخال بيانات البطاقة الإلكترونية بشكل صحيح (رقم البطاقة، تاريخ الانتهاء، ورمز CVV).';
+                    errorBox.classList.remove('hidden');
+                    return;
+                }
+            } else if (selectedPaymentMethod === 'stcpay') {
+                const phone = document.getElementById('stcPhone').value.trim();
+                if (phone.length < 9) {
+                    errorBox.textContent = 'يرجى إدخال رقم جوال STC Pay صحيح.';
+                    errorBox.classList.remove('hidden');
+                    return;
+                }
+            }
+
+            errorBox.classList.add('hidden');
+
+            // Switch to Processing View
+            document.getElementById('checkoutFormView').classList.add('hidden');
+            document.getElementById('checkoutProcessingView').classList.remove('hidden');
+
+            // Simulate Secure Gateway Confirmation
+            setTimeout(() => {
+                document.getElementById('checkoutProcessingView').classList.add('hidden');
+                document.getElementById('checkoutSuccessView').classList.remove('hidden');
+
+                const randomInv = `#MP-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+                document.getElementById('invoiceNumber').textContent = randomInv;
+                document.getElementById('successCustomerName').textContent = name;
+                document.getElementById('successCustomerEmail').textContent = email;
+            }, 1600);
+        }
+
+        function triggerBookDownload() {
+            const name = document.getElementById('customerName').value.trim() || 'قارئ Mate Page';
+            const email = document.getElementById('customerEmail').value.trim();
+            const inv = document.getElementById('invoiceNumber').textContent;
+            const c = currencies[currentCurrency];
+
+            // Generate an official digital receipt & welcome starter file for immediate download feedback
+            const content = `====================================================
+MATE PAGE | ميت بيج - مكتبة الشطرنج الإلكترونية
+====================================================
+إيصال شراء رسمي وتأكيد تحميل النسخة الإلكترونية
+
+رقم الفاتورة: ${inv}
+اسم العميل: ${name}
+البريد الإلكتروني: ${email}
+المنتج: كتاب "فيشر يعلمك الشطرنج" - بوبي فيشر (ترجمة: عبد الرحمن بعلبكي)
+الصيغة: PDF + EPUB (النسخة الرقمية الكاملة)
+المبلغ المدفوع: ${c.price} ${c.symbol}
+حالة الدفع: مدفوع ومؤكد إلكترونياً
+
+شكراً لثقتك في Mate Page! نتمنى لك رحلة ممتعة نحو إتقان الشطرنج.
+====================================================`;
+
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `MatePage-Fischer-Teaches-Chess-${inv.replace('#', '')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            document.getElementById('downloadToast').classList.remove('hidden');
+        }
+
+        function resetAndCloseCheckout() {
+            closeCheckoutModal();
+            setTimeout(() => {
+                document.getElementById('checkoutSuccessView').classList.add('hidden');
+                document.getElementById('checkoutFormView').classList.remove('hidden');
+                document.getElementById('downloadToast').classList.add('hidden');
+            }, 300);
+        }
+
+        // Close modals on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeSampleModal();
+                closeCheckoutModal();
+            }
+        });
+    </script>
+
+</body></html>
